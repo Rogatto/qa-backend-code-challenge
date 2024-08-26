@@ -27,7 +27,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run application
-      run: dotnet run
+      run: dotnet run --project src/Betsson.OnlineWallets.Web/Betsson.OnlineWallets.Web.csproj
     - name: Go to test project
       run: cd ./Betsson.OnlineWallets.Api.Tests
     - name: Running API testing project
