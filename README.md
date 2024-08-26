@@ -30,15 +30,29 @@ Api testing solution will be generating an Allure Report after finishing the exe
 https://allurereport.org/docs/install/
 ```
 
-After running the API tests normally with dotnet test the report needs to be generated using the results, in Betsson.OnlineWallets.Api.Tests folder just run:
+After running the API tests normally with dotnet test the report needs to be generated using the results, in Betsson.OnlineWallets.Api.Tests folder just follow the steps:
 
-Run API tests:
+### Running the API tests project:
+
+First check in src/Betsson.OnlineWallets.Api.Tests/appsettings.json if you are running the Online Wallet on the same host and port as configured there:
+
+```
+{
+    "OnlineWallet": {
+        "BaseUrl": "http://localhost:5047"
+    }
+}
+```
+
+For feature pipeline implementation we can create an appsettings.local.json and setup the host and port accordingly.
+
+After checking the host and port you will be able to run the API automation:
 
 ```
 dotnet test
 ```
 
-After you will be able to serve or generate Allure Report:
+### After running the API tests you will be able to serve or generate Allure Report:
 
 ```
 allure serve bin/Debug/net8.0/allure-results
