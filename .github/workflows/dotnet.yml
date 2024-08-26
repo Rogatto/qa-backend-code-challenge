@@ -31,4 +31,4 @@ jobs:
     - name: Run application
       run: DotnetBackground run --project src/Betsson.OnlineWallets.Web/Betsson.OnlineWallets.Web.csproj
     - name: Running API testing project
-      run: dotnet test --project src/Betsson.OnlineWallets.Api.Tests
+      run: dotnet test src/Betsson.OnlineWallets.Api.Tests/Betsson.OnlineWallets.Api.Tests.csproj
