@@ -22,7 +22,7 @@ namespace Betsson.OnlineWallets.Services
             OnlineWalletEntry? onlineWalletEntry = await _onlineWalletRepository.GetLastOnlineWalletEntryAsync();
 
             // Default BalanceBefore to 0 if there are no transactions
-            decimal amount = onlineWalletEntry == default(OnlineWalletEntry) ? 0 : (onlineWalletEntry.BalanceBefore + onlineWalletEntry.Amount);
+            decimal amount = onlineWalletEntry == default(OnlineWalletEntry) ? 0.00m : (onlineWalletEntry.BalanceBefore + onlineWalletEntry.Amount);
 
             Balance currentBalance = new Balance
             {
