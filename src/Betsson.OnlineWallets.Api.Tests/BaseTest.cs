@@ -1,25 +1,43 @@
 using static RestAssured.Dsl;
 using System.Text.Json;
-public class ApiFixture
+using Microsoft.Extensions.Configuration;
+using Xunit.Abstractions;
+public class BaseTest
 
 {
-    public static string hostApi = "http://localhost:5047";
+    public static string hostApi = GetHostOnlineWallet();
     public static string pathBalance = "/onlinewallet/balance";
     public static string pathWithDraw = "/onlinewallet/withdraw";
     public static string pathDeposit= "/onlinewallet/deposit";
 
+    public static IConfigurationRoot GetIConfigurationRoot()
+    {
+        return new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
+    }
 
-    public static void verifyFundsAndResetBalance(){
+    public static string GetHostOnlineWallet()
+    {
+        var configuration = GetIConfigurationRoot();
+        string baseUrl = configuration.GetValue<string>("OnlineWallet:BaseUrl");
+        return baseUrl;
+    }
 
+    public static void VerifyFundsAndResetBalance()
+    {
         //Verify initializing wallet it might not contain funds
-        double balanceAmount = currentBalance();
+        double balanceAmount = CurrentBalance();
 
         if(balanceAmount > 0){
-            withdrawFundFromWallet(balanceAmount);
+            WithdrawFundFromWallet(balanceAmount);
         }
     }
 
-    public static double currentBalance (){
+    public static double CurrentBalance ()
+    {
         double amountBalance =
         (double)Given()
             .When()
@@ -32,7 +50,8 @@ public class ApiFixture
         return amountBalance;
     }
 
-    public static void withdrawFundFromWallet (double amountToWithdraw){
+    public static void WithdrawFundFromWallet (double amountToWithdraw)
+    {
         //Check new withdraw from the wallet
         string requestBody = JsonSerializer.Serialize(new 
         {
@@ -46,7 +65,8 @@ public class ApiFixture
             .StatusCode(200);
     }
 
-    public static void depositFundToWallet (double amountToDeposit){
+    public static void DepositFundToWallet (double amountToDeposit)
+    {
         //Check deposit from the wallet
         string requestBody = JsonSerializer.Serialize(new 
         {

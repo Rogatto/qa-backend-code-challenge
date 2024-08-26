@@ -8,14 +8,14 @@ using System.Text.Json;
 [Collection("Sequential")]
 [AllureFeature("Withdraw Funds")]
 [AllureSuite("Withdraw Funds")]
-public class WithdrawFundsApiTests
+public class WithdrawFundsApiTests : BaseTest
 
 {
     [Fact(DisplayName = "Should not withdraw with insufficient funds")]
     public void ShouldNotWithDrawWithInsufficientFunds()
     {
         //First reset balance to keep this test independent
-        ApiFixture.verifyFundsAndResetBalance();
+        VerifyFundsAndResetBalance();
 
         double amount = Faker.RandomNumber.Next(999);
         string requestBody = JsonSerializer.Serialize(new 
@@ -26,7 +26,7 @@ public class WithdrawFundsApiTests
         Given()
             .Body(requestBody)
             .When()
-            .Post(ApiFixture.hostApi + ApiFixture.pathWithDraw)
+            .Post(hostApi + pathWithDraw)
             .Then()
             .StatusCode(400)
             .And()
@@ -47,7 +47,7 @@ public class WithdrawFundsApiTests
         Given()
             .Body(requestBody)
             .When()
-            .Post(ApiFixture.hostApi + ApiFixture.pathWithDraw)
+            .Post(hostApi + pathWithDraw)
             .Then()
             .StatusCode(400)
             .And()
@@ -68,15 +68,15 @@ public class WithdrawFundsApiTests
         });
 
         //First reset balance to keep this test independent
-        ApiFixture.verifyFundsAndResetBalance();
+        VerifyFundsAndResetBalance();
 
         //Deposit funds before starting to withdraw
-        ApiFixture.depositFundToWallet(amount);
+        DepositFundToWallet(amount);
 
         Given()
             .Body(requestBody)
             .When()
-            .Post(ApiFixture.hostApi + ApiFixture.pathWithDraw)
+            .Post(hostApi + pathWithDraw)
             .Then()
             .StatusCode(200)
             .And()
@@ -85,7 +85,7 @@ public class WithdrawFundsApiTests
         //Check if balance is updated after withdraw
         Given()
             .When()
-            .Get(ApiFixture.hostApi + ApiFixture.pathBalance)
+            .Get(hostApi + pathBalance)
             .Then()
             .StatusCode(200)
             .And()

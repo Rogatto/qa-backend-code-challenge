@@ -8,7 +8,7 @@ using System.Text.Json;
 [Collection("Sequential")]
 [AllureFeature("Deposit Funds")]
 [AllureSuite("Deposit Funds")]
-public class DepositFundsApiTests
+public class DepositFundsApiTests : BaseTest
 
 {
     [Fact(DisplayName = "Should not deposit negative amount to a wallet's balance")]
@@ -23,7 +23,7 @@ public class DepositFundsApiTests
         Given()
             .Body(requestBody)
             .When()
-            .Post(ApiFixture.hostApi + ApiFixture.pathDeposit)
+            .Post(hostApi + pathDeposit)
             .Then()
             .StatusCode(400)
             .And()
@@ -37,7 +37,7 @@ public class DepositFundsApiTests
     public void ShouldDepositAmountToWallet()
     {
         //First reset balance to keep this test independent
-        ApiFixture.verifyFundsAndResetBalance();
+        VerifyFundsAndResetBalance();
 
         double amount = Faker.RandomNumber.Next(999);
         string requestBody = JsonSerializer.Serialize(new 
@@ -48,7 +48,7 @@ public class DepositFundsApiTests
         Given()
             .Body(requestBody)
             .When()
-            .Post(ApiFixture.hostApi + ApiFixture.pathDeposit)
+            .Post(hostApi + pathDeposit)
             .Then()
             .StatusCode(200)
             .And()
@@ -57,7 +57,7 @@ public class DepositFundsApiTests
          //Check if balance is updated after deposit
         Given()
             .When()
-            .Get(ApiFixture.hostApi + ApiFixture.pathBalance)
+            .Get(hostApi + pathBalance)
             .Then()
             .StatusCode(200)
             .And()
