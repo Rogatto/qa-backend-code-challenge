@@ -22,16 +22,6 @@ docker run -p <port>:8080 <image id>
 http://localhost:<port>/swagger/index.html
 ```
 
-### Api Testing
-
-Api testing solution will be generating an Allure Report after finishing the execution you have to have Allure commandline installed:
-
-```
-https://allurereport.org/docs/install/
-```
-
-After running the API tests normally with dotnet test the report needs to be generated using the results, in Betsson.OnlineWallets.Api.Tests folder just follow the steps:
-
 ### Running unit tests:
 
 ```
@@ -55,6 +45,16 @@ reportgenerator -reports:"src/Betsson.OnlineWallets/Betsson.OnlineWallets.UnitTe
 You will be able to see coveragereport folder created and open index.html file
 
 ![plot](codecoverage.png)
+
+### Api Testing
+
+Api testing solution will be generating an Allure Report after finishing the execution you have to have Allure commandline installed:
+
+```
+https://allurereport.org/docs/install/
+```
+
+After running the API tests normally with dotnet test the report needs to be generated using the results, in Betsson.OnlineWallets.Api.Tests folder just follow the steps:
 
 ### Running the API tests project:
 
