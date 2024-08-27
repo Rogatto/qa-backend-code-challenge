@@ -28,6 +28,8 @@ jobs:
       run: dotnet build --no-restore
     - name: Install DotnetBackground
       run: dotnet tool install --global DotnetBackground
+    - name: Run Unit Tests
+      run: dotnet test src/Betsson.OnlineWallets/Betsson.OnlineWallets.UnitTests/Betsson.OnlineWallets.UnitTests.csproj --collect:"XPlat Code Coverage"
     - name: Run application
       run: DotnetBackground run --project src/Betsson.OnlineWallets.Web/Betsson.OnlineWallets.Web.csproj
     - name: Running API testing project
